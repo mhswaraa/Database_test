@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data dari Spreadsheet</title>
+</head>
+<body>
+    <h1>Data dari Spreadsheet</h1>
+    <div id="dataContainer"></div>
+
+    <script>
+        // Melakukan permintaan ke endpoint /data
+        fetch('/data')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Memastikan data tidak kosong
+                if (data.length === 0) {
+                    throw new Error('Data kosong');
+                }
+
+                // Memformat data dan menampilkannya di dalam elemen dataContainer
+                const dataContainer = document.getElementById('dataContainer');
+                let html = '<ul>';
+                data.forEach(row => {
+                    html += `<li>ID: ${row.ID}, Nama: ${row.Nama}, Alamat: ${row.Alamat}</li>`;
+                });
+                html += '</ul>';
+                dataContainer.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                const dataContainer = document.getElementById('dataContainer');
+                dataContainer.innerHTML = '<p>Error: Gagal mengambil data</p>';
+            });
+    </script>
+</body>
+</html>
