@@ -14,7 +14,7 @@ app.use(express.static(join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
     // Menangani permintaan untuk root path dengan merespons file HTML index.html
-    res.sendFile(join(__dirname, 'public', 'index.html'));
+    res.sendFile(join(__dirname, 'index.html'));
 });
 
 app.get('/data', async (req, res) => {
